@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spotify Web Playback SDK Quick Start Tutorial</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
+  <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
+
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+        const redirect_uri = 'http://localhost:8888/callback';
+        const my_client_id = '234085eb7682491ea90235c8590a98f5';
+      const token = 'BQB33Jc0g2AuVEdNAv4PEq_YQsNI3hv95AuAhMn5yG0TaIEDJ5MrLBHP2jyfps35JB5cD5QjBiCHMzYIkuRNT753Se7EIO8CbqcA1Y6io9yy7gqnmwmzW0nh3d_tczJIzAXoVq-yReMjLj_RhkrsJVvo6bxLTPSwp9FlvU_f7BahCIX-m18uxNtL4JxF';
+      const player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+      });
+
+      // Error handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+      // Playback status updates
+      player.addListener('player_state_changed', state => { console.log(state); });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect().then(success => {
+        if (success) {
+                console.log('The Web Playback SDK successfully connected to Spotify!');
+  }
+})
+
+        const express = require('express')
+        const app = express()
+        const port = process.env.PORT || 3000;
+
+        app.get('/login', function(req, res) {
+        var scopes = 'user-read-currently-playing user-read-playback-state';
+        res.redirect('https://accounts.spotify.com/authorize' +
+          '?response_type=code' +
+          '&client_id=' + my_client_id +
+          (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+          '&redirect_uri=' + encodeURIComponent(redirect_uri));
+        });
+
+        $.ajax({
+           url: 'https://api.spotify.com/v1/me/player/currently-playing',
+           headers: {
+               'Authorization': 'Bearer ' + token
+           },
+           success: function(response) {
+                console.log('Spotify API request success');
+// ------
+        // Get song info
+        // $(document).ready(function() {
+        //         $.get("https://api.spotify.com/v1/me/player/currently-playing", function(data) {
+        //                 $("#info").html(JSON.stringify(data));
+        //         });
+        // });
+// ------
+           }      
+
+
+});   
+    };
+  </script>
+  <script>
+     
+  </script>
+  <div id="info"></div>
+</body>
+</html>
