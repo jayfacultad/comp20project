@@ -1,0 +1,15 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Music Visualizer for Comp20 Fall 2018 group project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Greg Pickart, Kai Fong, Jay Facultad",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
